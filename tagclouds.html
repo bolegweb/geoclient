@@ -1,0 +1,57 @@
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+	"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+
+	<title>TagClouds Testing Page</title>
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js" type="text/javascript" charset="utf-8"></script>
+
+	<script src="/ogcwxs/portal/src/js/jquery.tagcloud.js" type="text/javascript" charset="utf-8"></script>
+
+	<script type="text/javascript" charset="utf-8">
+	
+	$(document).ready(function(){
+	var tags;
+	var type;
+	var keyword;
+			
+			$.ajax('https://bolegweb.geof.unizg.hr/ogcwxs/rest/tagcloud_all.php').done(function(response) {
+				tags = $.parseJSON(response);
+				/*
+				$.each(tags, function(idx, obj) {
+					type = obj.type;
+					keyword = obj.tag.split(" (")[0];
+				console.log(type);
+				console.log(keyword);
+				});
+				*/
+				
+				$("#tagcloud1").tagCloud(tags, {
+					click: function(e) { 
+					
+						window.open("https://bolegweb.geof.unizg.hr/pycsw_wms?service=CSW&version=2.0.2&request=GetRecords&outputSchema=http://www.isotc211.org/2005/gmd&typenames=gmd:MD_Metadata&elementsetname=full&resulttype=results&constraintlanguage=FILTER&constraint=%3Cogc:Filter%20xmlns:ogc%3D%22http://www.opengis.net/ogc%22%3E%3Cogc:PropertyIsEqualTo%3E%3Cogc:PropertyName%3Ecsw:AnyText%3C/ogc:PropertyName%3E%3Cogc:Literal%3E" + e.split(" (")[0] + "%3C/ogc:Literal%3E%3C/ogc:PropertyIsEqualTo%3E%3C/ogc:Filter%3E");
+					},
+					min: tags.min,
+					max: tags.max
+				});
+				
+			});
+   })
+	</script>
+</head>
+
+<body>
+  
+  <div id="container" style="width: 100%; height:100%;">
+
+<div id="tagcloud1"></div>
+	
+          
+  </div>
+
+  
+</body>
+</html>

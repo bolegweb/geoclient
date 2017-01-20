@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en" >
+	<head>
+		<title>Map of OGC Resources</title>
+		<meta charset="UTF-8"/>
+
+
+					<link rel="shortcut icon" type="image/png" href="src/img/favicon.png"/>
+					
+					<script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+					<script src="//code.jquery.com/jquery-1.10.2.js"></script>
+					<script src="//code.jquery.com/ui/1.11.4/jquery-ui.js"></script>
+					<script type="text/javascript" src="https://www.google.com/jsapi"></script>
+					
+				</head>
+				<body>
+				<div>
+	<script type="text/javascript" >
+        google.load("visualization", "1", {packages:["geochart"]});
+        google.setOnLoadCallback(drawRegionsMap);
+
+        function drawRegionsMap() {
+        url="/ogcwxs/rest/map2.php";
+        data={};        
+        $.getJSON(url, data, function(res){
+        var data = google.visualization.arrayToDataTable(res);
+        var options = {
+sizeAxis: { minValue: 0, maxValue: 2000 },
+          //region: '002', // Africa
+          colorAxis: {colors:['#ff0000']}, //['#00640A','#00650A','#00670A','#00690A','#006B0A','#006D0A','#006E0A','#00700A','#00720A','#00740A','#00760A','#00780A','#00790A','#007B0A','#007D0A','#007F0A','#00810A','#00820A','#00840A','#00860A','#00880A','#008A0A','#008C0A','#008D0A','#008F0A','#00910A','#00930A','#00950A','#00960A','#00980A','#009A0A','#009C0A','#009E0A','#00A00A','#00A10A','#00A30A','#00A50A','#00A70A','#00A90A','#00AA0A','#00AC0A','#00AE0A','#00B00A','#00B20A','#00B40A','#00B50A','#00B70A','#00B90A','#00BB0A','#00BD0A','#00BE0A','#00C00A','#00C20A','#00C40A','#00C60A','#00C80A','#00C90A','#00CB0A','#00CD0A','#00CF0A','#00D10A','#00D20A','#00D40A','#00D60A','#00D80A','#00DA0A','#00DC0A','#00DD0A','#00DF0A','#00E10A','#00E30A','#00E50A','#00E60A','#00E80A','#00EA0A','#00EC0A','#00EE0A','#00F00A','#00F10A','#00F20A','#00F40A','#00F50A','#00F60A','#00F80A','#00F90A','#00FA0A','#00FC0A','#00FD0A','#00FF0A','#01FF0A','#03FF0A','#05FF0A','#07FF0A','#09FF0A','#0AFF0A','#0CFF0A','#0EFF0A','#10FF0A','#12FF0A','#14FF0A','#15FF0A','#17FF0A','#19FF0A','#1BFF0A','#1DFF0A','#1EFF0A','#20FF0A','#22FF0A','#24FF0A','#26FF0A','#28FF0A','#29FF0A','#2BFF0A','#2DFF0A','#2FFF0A','#31FF0A','#32FF0A','#34FF0A','#36FF0A','#38FF0A','#3AFF0A','#3CFF0A','#3DFF0A','#3FFF0A','#41FF0A','#43FF0A','#45FF0A','#46FF0A','#48FF0A','#4AFF0A','#4CFF0A','#4EFF0A','#50FF0A','#51FF0A','#53FF0A','#55FF0A','#57FF0A','#59FF0A','#5AFF0A','#5CFF0A','#5EFF0A','#60FF0A','#62FF0A','#64FF0A','#65FF0A','#67FF0A','#69FF0A','#6BFF0A','#6DFF0A','#6EFF0A','#70FF0A','#72FF0A','#74FF0A','#76FF0A','#78FF0A','#79FF0A','#7BFF0A','#7DFF0A','#7FFF0A','#81FF0A','#82FF0A','#84FF0A','#86FF0A','#88FF0A','#8AFF0A','#8CFF0A','#8DFF0A','#8FFF0A','#91FF0A','#93FF0A','#95FF0A','#96FF0A','#98FF0A','#9AFF0A','#9CFF0A','#9EFF0A','#A0FF0A','#A1FF0A','#A3FF0A','#A5FF0A','#A7FF0A','#A9FF0A','#AAFF0A','#ACFF0A','#AEFF0A','#B0FF0A','#B2FF0A','#B4FF0A','#B5FF0A','#B7FF0A','#B9FF0A','#BBFF0A','#BDFF0A','#BEFF0A','#C0FF0A','#C2FF0A','#C4FF0A','#C6FF0A','#C8FF0A','#C9FF0A','#CBFF0A','#CDFF0A','#CFFF0A','#D1FF0A','#D2FF0A','#D4FF0A','#D6FF0A','#D8FF0A','#DAFF0A','#DCFF0A','#DDFF0A','#DFFF0A','#E1FF0A','#E3FF0A','#E5FF0A','#E6FF0A','#E8FF0A','#EAFF0A','#ECFF0A','#EEFF0A','#F0FF0A','#F1FF09','#F2FF08','#F4FF07','#F5FF06','#F6FF05','#F8FF04','#F9FF03','#FAFF02','#FCFF01','#FDFF00','#FFFF00','#FFFF01','#FFFF03','#FFFF05','#FFFF07','#FFFF09','#FFFF0A','#FFFF0C','#FFFF0E','#FFFF10','#FFFF12','#FFFF14','#FFFF15','#FFFF17','#FFFF19','#FFFF1B','#FFFF1D','#FFFF1E','#FFFF20','#FFFF22','#FFFF24','#FFFF26','#FFFF28','#FFFF29','#FFFF2B','#FFFF2D','#FFFF2F','#FFFF31','#FFFF32','#FFFF34','#FFFF36','#FFFF38','#FFFF3A','#FFFF3C','#FFFF3D','#FFFF3F','#FFFF41','#FFFF43','#FFFF45','#FFFF46','#FFFF48','#FFFF4A','#FFFF4C','#FFFF4E','#FFFF50','#FFFF51','#FFFF53','#FFFF55','#FFFF57','#FFFF59','#FFFF5A','#FFFF5C','#FFFF5E','#FFFF60','#FFFF62','#FFFF64','#FFFF65','#FFFF67','#FFFF69','#FFFF6B','#FFFF6D','#FFFF6E','#FFFF70','#FFFF72','#FFFF74','#FFFF76','#FFFF78','#FFFF79','#FFFF7B','#FFFF7D','#FFFF7F','#FFFF81','#FFFF82','#FFFF84','#FFFF86','#FFFF88','#FFFF8A','#FFFF8C','#FFFF8D','#FFFF8F','#FFFF91','#FFFF93','#FFFF95','#FFFF96','#FFFF98','#FFFF9A','#FFFF9C','#FFFF9E','#FFFFA0','#FFFFA1','#FFFFA3','#FFFFA5','#FFFFA7','#FFFFA9','#FFFFAA','#FFFFAC','#FFFFAE','#FFFFB0','#FFFFB2','#FFFFB4','#FFFFB5','#FFFFB7','#FFFFB9','#FFFFBB','#FFFFBD','#FFFFBE','#FFFFC0','#FFFFC2','#FFFFC4','#FFFFC6','#FFFFC8','#FFFFC9','#FFFFCB','#FFFFCD','#FFFFCF','#FFFFD1','#FFFFD2','#FFFFD4','#FFFFD6','#FFFFD8','#FFFFDA','#FFFFDC','#FFFFDD','#FFFFDF','#FFFFE1','#FFFFE3','#FFFFE5','#FFFFE6','#FFFFE8','#FFFFEA','#FFFFEC','#FFFFEE','#FFFFF0']},
+          //backgroundColor: '#81d4fa',
+          datalessRegionColor: '#ffffff',
+          defaultColor: '#f5f5f5'
+        };
+        var chart = new google.visualization.GeoChart(document.getElementById('regions_div'));
+
+        chart.draw(data, options);
+        });
+        }
+	</script>
+<div>
+<h2>Project at the glance</h2>
+
+<p align="justify">The effective access and use of geospatial information (GI) resources acquires a critical value of importance in modern knowledge based society. Standard web services defined by Open Geospatial Consortium (OGC) are frequently used within the implementations of spatial data infrastructure (SDI) to facilitate discovery and use of geospatial data. This data are stored in databases located in a layer, called the invisible web, thus are ignored by search engines. SDI uses a catalogue service for the web as a gateway to the GI world through the metadata defined by ISO standards, which are structurally diverse to OGC metadata. Therefore a crosswalk needs to be implemented to bridge the mainstream web with SDI to enrich its information extent. A public global wide and user friendly portal of OGC resources available on the web ensures and enhances the use of GI within a multidisciplinary context and bridges the geospatial web from the end-user perspective, thus opens its borders to everybody.</p>
+</div>
+
+<div>
+<h2>Geographic distribution of the discovered OGC resources</h2>
+
+<div id="regions_div" style="width: auto; height: 800px;"/>
+</div>
+
+<div>
+<center>
+<h2>Acknowledgements</h2>
+
+<p><i>The research leading to the results of the project has received funding from the European Union Seventh Framework Programme (FP7 2007-2013) under grant agreement n° 291823 Marie Curie FP7-PEOPLE-2011-COFUND (The new International Fellowship Mobility Programme for Experienced Researchers in Croatia - NEWFELPRO). This web space has been prepared as a part of a project "Bolegweb - Crosswalking the layers of geospatial information resources to enable a borderless geospatial web" which has received funding through NEWFELPRO project under grant agreement n° 3.</i></p>
+</center>
+</div>
+
+<div align="center">
+<p style="color:white">Hosted by "srce" University of Zagreb Computing Centre</p>
+</div>
+</div>
+
+					
+				</body>	

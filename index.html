@@ -1,0 +1,178 @@
+<!DOCTYPE html>
+<html lang="en" >
+	<head>
+		<title>Map Portal of OGC Resources</title>
+		<meta charset="UTF-8">
+			<script src="/ogcwxs/portal/src/js/ol.js"></script>
+			<script src="/ogcwxs/portal/src/js/proj4.js"></script>
+			<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.8.3/jquery.min.js"></script>
+
+			
+				<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" integrity="sha384-1q8mTJOASx8j1Au+a5WDVnPi2lkFfwwEAa8hDDdjZlpLegxhjVME1fgjWPGmkzs7" crossorigin="anonymous">
+					<link rel="stylesheet" href="/ogcwxs/portal/src/css/ol3-layerswitcher.css" />
+					
+					<link rel="stylesheet" href="/ogcwxs/portal/src/css/portal.css" type="text/css" />
+					<link rel="stylesheet" href="/ogcwxs/portal/src/css/ol.css" type="text/css">
+					<link rel="stylesheet" href="/ogcwxs/portal/src/css/bootstrap-toggle.min.css" type="text/css">
+					
+					<link rel="stylesheet" href="/ogcwxs/portal/src/css/geocoder.css"/>
+					<link rel="stylesheet" href="/ogcwxs/portal/src/css/ol3gm.css"/>
+					<link rel="stylesheet" href="/ogcwxs/portal/src/css/sweetalert.css"/>
+					
+					<link rel="stylesheet" href="/ogcwxs/portal/src/css/jquery-ui-1.8.5.custom.css" type="text/css"  />
+					
+					<link rel="shortcut icon" type="image/png" href="/ogcwxs/portal/src/img/favicon.png"/>
+					<script src="https://code.jquery.com/jquery-1.11.2.min.js"></script>
+					<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
+					<script src="/ogcwxs/portal/src/js/ol3-layerswitcher.js"></script>
+					<script src="/ogcwxs/portal/src/js/sweetalert.min.js"></script>
+					
+					<script src="/ogcwxs/portal/src/js/jquery-ui-1.8.5.custom.min.js" type="text/javascript"></script>
+					<script src="/ogcwxs/portal/src/js/bootstrap2-toggle.min.js" type="text/javascript"></script>
+					
+					<script src="https://maps.googleapis.com/maps/api/js?v=3&key=AIzaSyA4sVmU1pNiki6Lvvivufuy_SDlpUMY21U"></script>
+					<!--
+					<script src="/ogcwxs/portal/src/js/ol3gm.js" type="text/javascript"></script>
+					-->
+
+					
+					
+					
+				</head>
+				<body>
+
+					<div id="map" class="map"></div>
+
+					<div id="wait" style="display:none;position:absolute;top:30%;left:40%;"><img src="src/img/hudrujem.gif" width="200px" height="200px" /></div>
+
+
+					<div id="md-info" class="modal fade" tabindex="-1" role="dialog" aria-hidden="true">
+						<div class="modal-dialog">
+							<div class="modal-content">
+								<div class="modal-header">
+									<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+									<h4 class="modal-title">RESULTS</h4>
+									<div id="queryInfo"></div>
+								</div>
+								<div class="modal-body" id="div-csw-results">
+									<div class="table-responsive">
+										<table class="table table-striped" id="table-csw-results">
+
+										</table>
+									</div>
+								</div>
+								<div class="modal-footer">
+									<div id="div-results"></div>
+									<div id="pager">
+										<ul class="pager" >
+											<li id="li-previous"><a id="a-previous" title="Previous" href="#">Previous</a></li>
+											<li id="li-next"><a id="a-next" title="Next" href="#">Next</a></li>
+										</ul>
+									</div>
+									<button id="btn-close" type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+								</div>
+							</div>
+						</div>
+					</div>				
+					<!--
+				<div>
+				<form id="srch-form" class="navbar-form" role="search">
+				<input type="hidden" id="input-startposition"/>
+                    <input type="hidden" id="input-matched"/>
+                    <input type="hidden" id="input-nextrecord"/>
+					<div class="input-group" style="width: 500px">
+						<input type="text" class="form-control" placeholder="Search for OGC resources ..." name="srch-term" id="srch-term">
+							<div class="input-group-btn">
+								<button id="btn-search" class="btn btn-default" type="submit"><i class="glyphicon glyphicon-search"></i></button>
+							</div>
+						</div>	
+-->						
+					<div id="spatialQuery" style="top: 10%;position: absolute;left: 25%;padding-top: 5px;">
+<!--
+						<span class="button-checkbox">
+							<button id="input-bbox" type="button" class="btn btn-outline-primary" data-color="primary">Current Spatial Extent</button>
+							<input type="checkbox" data-toggle="toggle">
+							</span>
+
+							<span class="button-checkbox">
+								<button id="input-poi" type="button" class="btn btn-outline-primary" data-color="primary">Overlapping POI</button>
+								<input type="checkbox" data-toggle="toggle">
+								</span>
+								-->
+								<label class="checkbox-inline" >
+								  <input  id="input-bbox" type="checkbox" data-toggle="toggle" data-on="Current Spatial Extent Enabled" data-off="Current Spatial Extent Disabled" data-width="250" data-height="50">
+								</label>
+								<label class="checkbox-inline" >
+								  <input id="input-poi" type="checkbox" data-toggle="toggle" data-on="Overlapping POI Enabled" data-off="Overlapping POI Disabled" data-width="250" data-height="50">
+								</label>
+								<!--
+						<button id="input-bbox" type="button" class="btn btn-info btn-circle btn-lg"><i class="glyphicon glyphicon-ok"></i><br>Current Spatial Extent</button>
+						<button id="input-poi" type="button" class="btn btn-info btn-circle btn-lg"><i class="glyphicon glyphicon-ok"></i><br>Overlapping POI</button>
+								
+								<label class="checkbox-inline"><input type="checkbox" value="" id="input-bbox"/>CURRENT SPATIAL EXTENT</label>
+								<label class="checkbox-inline"><input type="checkbox" value="" id="input-poi"/>OVERLAP POI</label>
+								-->
+							</div>
+							
+							
+
+
+
+
+
+							<div class="input-group" style="position: absolute;top: 5%;width: 50%;left: 25%;">
+								<input type="hidden" id="input-matched"/>
+								<input type="hidden" id="input-nextrecord"/>
+								<div class="input-group-btn search-panel">
+									<button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown">
+										<span id="search_concept">Anything</span> <span class="caret"></span>
+									</button>
+									<ul class="dropdown-menu" role="menu">
+										<li><a href="#wms">Web Map Services</a></li>
+										<li><a href="#wfs">Web Feature Services</a></li>
+										<li><a href="#wcs">Web Coverage Services</a></li>
+										<li><a href="#sos">Sensor Observation Services</a></li>
+										<li><a href="#wps">Web Processing Services</a></li>
+										<li><a href="#wmts">Web Map Tile Services</a></li>
+										<li class="divider"></li>
+										<li><a href="#all">Anything</a></li>
+									</ul>
+								</div>
+								<input type="hidden" name="search_param" value="all" id="search_param">         
+									<input id="srch-term" type="text" class="form-control" name="x" placeholder="Search term...">
+										<span class="input-group-btn">
+											<button id="btn-search" class="btn btn-default" type="button"><span class="glyphicon glyphicon-search"></span></button>
+										</span>
+									</div>
+
+
+									<div id="click-info" class="modal fade" role="dialog">
+										<div class="modal-dialog">
+
+											<!-- Modal content-->
+											<div class="modal-content">
+												<div class="modal-header">
+													<button type="button" class="close" data-dismiss="modal">&times;</button>
+													<h4 class="modal-title">Click on Map Info</h4>
+												</div>
+												<div class="modal-body" id="click-info-results">
+												</div>
+												<div class="modal-footer">
+													<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+												</div>
+											</div>
+
+										</div>
+									</div>
+
+									<div id="popup" class="ol-popup">
+										<a href="#" id="popup-closer" class="ol-popup-closer"></a>
+										<div id="popup-content"></div>
+									</div>
+
+
+
+									<script src="/ogcwxs/portal/src/js/geocoder.js"></script>
+									<script src="/ogcwxs/portal/src/js/portal.js"></script>
+									</body>
+								</html>
