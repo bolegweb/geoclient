@@ -7,7 +7,7 @@
 $db = new SQLite3('/usr/share/pycsw/tests/suites/cite/data/ogcwxs.db');
 $text = $db->escapeString($_GET['term']);
 
-$query = "SELECT distinct keyword FROM keywords WHERE keyword LIKE '%$text%' AND type='wps' ORDER BY keyword ASC LIMIT 10";
+$query = "SELECT distinct keyword FROM keywords WHERE keyword LIKE '%$text%' ORDER BY keyword ASC LIMIT 10";
 
 
 $result = $db->query($query);
@@ -17,8 +17,14 @@ while($row = $result->fetchArray())
 {
 	$keywords = $row['keyword'];
     if (!$first) { $json .=  ','; } else { $first = false; }
+	
 	$json .= '{"value":"'.$keywords.'"}';
+	//$json .= '{"value":"'.$row['keywords'].'"}';
+	
 }
 $json .= ']';
 echo $json;
+
+
+
 ?>
